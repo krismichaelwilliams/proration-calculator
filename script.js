@@ -30,17 +30,19 @@ function calculateProration() {
   const payor = payorEl.options[payorEl.selectedIndex].text;
   let firstDate;
   let numberOfDays;
+  let proration;
   console.log(payor);
   if (payor === "Buyer") {
     firstDate = dateFormat(fromDateEl);
     numberOfDays = getTimestamp(fromDate, disbursement);
+    proration = (numberOfDays * dailyTax).toFixed(2);
   } else if (payor === "Seller") {
     firstDate = dateFormat(toDateEl);
     numberOfDays = getTimestamp(toDate, disbursement);
+    proration = ((numberOfDays - 1) * dailyTax).toFixed(2);
   }
 
   const secondDate = dateFormat(disbursementEl);
-  let proration = (numberOfDays * dailyTax).toFixed(2);
 
   if (proration > 0) {
     resultEl.textContent = `Proration CREDIT of ${proration} from ${firstDate} to ${secondDate}`;
